@@ -1,0 +1,4 @@
+
+query errors {
+  errors: all_errors
+}

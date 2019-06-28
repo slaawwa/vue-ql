@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueApollo from 'vue-apollo'
+import { InMemoryCache } from 'apollo-cache-inmemory'
 import { createApolloClient, restartWebsockets } from 'vue-cli-plugin-apollo/graphql-client'
 
 // Install the vue plugin
@@ -21,7 +22,7 @@ const defaultOptions = {
   httpEndpoint,
   // You can use `wss` for secure connection (recommended in production)
   // Use `null` to disable subscriptions
-  wsEndpoint: process.env.VUE_APP_GRAPHQL_WS || 'ws://localhost:4000/graphql',
+  wsEndpoint: null, // process.env.VUE_APP_GRAPHQL_WS || 'ws://localhost:4000/graphql',
   // LocalStorage token
   tokenName: AUTH_TOKEN,
   // Enable Automatic Query persisting with Apollo Engine
@@ -36,9 +37,13 @@ const defaultOptions = {
   // note: don't override httpLink here, specify httpLink options in the
   // httpLinkOptions property of defaultOptions.
   // link: myLink
+  httpLinkOptions: {
+    headers: { 
+    },
+  },
 
   // Override default cache
-  // cache: myCache
+  cache: new InMemoryCache(),
 
   // Override the way the Authorization header is set
   // getAuth: (tokenName) => ...
